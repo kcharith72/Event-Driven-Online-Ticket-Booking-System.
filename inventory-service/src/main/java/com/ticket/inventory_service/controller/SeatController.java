@@ -4,14 +4,12 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ticket.inventory_service.entity.Seat;
 import com.ticket.inventory_service.service.SeatService;
 
 @RestController
-@RequestMapping("/seats")
 public class SeatController {
 
     private final SeatService seatService;
@@ -20,15 +18,18 @@ public class SeatController {
         this.seatService = seatService;
     }
 
-    // View available seats for event
-    @GetMapping("/{eventId}")
+    @GetMapping("/seats/{eventId}")
     public List<Seat> getAvailableSeats(@PathVariable String eventId) {
         return seatService.getAvailableSeats(eventId);
     }
 
-    // Reserve a seat
     @GetMapping("/reserve/{seatId}")
-    public Seat reserveSeat(@PathVariable String seatId) {
-        return seatService.reserveSeat(seatId);
+public String reserveSeat(@PathVariable String seatId) {
+    try {
+        seatService.reserveSeat(seatId);
+        return "Seat " + seatId + " reserved successfully";
+    } catch (Exception e) {
+        return e.getMessage();
     }
+}
 }

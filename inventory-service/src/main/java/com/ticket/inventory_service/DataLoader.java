@@ -1,31 +1,35 @@
 package com.ticket.inventory_service;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import com.ticket.inventory_service.entity.Seat;
+import com.ticket.inventory_service.entity.SeatStatus;
 import com.ticket.inventory_service.repository.SeatRepository;
 
-@Component
-public class DataLoader implements CommandLineRunner {
+@Configuration
+public class DataLoader {
 
-    private final SeatRepository seatRepository;
+    @Bean
+CommandLineRunner loadData(SeatRepository seatRepository) {
+    return args -> {
 
-    public DataLoader(SeatRepository seatRepository) {
-        this.seatRepository = seatRepository;
-    }
+        // Avengers seats
+        seatRepository.save(new Seat("A1", "E1", SeatStatus.AVAILABLE));
+        seatRepository.save(new Seat("A2", "E1", SeatStatus.AVAILABLE));
+        seatRepository.save(new Seat("A3", "E1", SeatStatus.AVAILABLE));
+        seatRepository.save(new Seat("A4", "E1", SeatStatus.AVAILABLE));
+        seatRepository.save(new Seat("A5", "E1", SeatStatus.AVAILABLE));
 
-    @Override
-    public void run(String... args) {
+        // Batman seats
+        seatRepository.save(new Seat("B1", "E2", SeatStatus.AVAILABLE));
+        seatRepository.save(new Seat("B2", "E2", SeatStatus.AVAILABLE));
+        seatRepository.save(new Seat("B3", "E2", SeatStatus.AVAILABLE));
+        seatRepository.save(new Seat("B4", "E2", SeatStatus.AVAILABLE));
+        seatRepository.save(new Seat("B5", "E2", SeatStatus.AVAILABLE));
 
-        // Only insert if empty
-        if (seatRepository.count() == 0) {
-
-            seatRepository.save(new Seat("A1", "E1", "AVAILABLE"));
-            seatRepository.save(new Seat("A2", "E1", "AVAILABLE"));
-            seatRepository.save(new Seat("A3", "E1", "AVAILABLE"));
-
-            System.out.println("Sample seats inserted.");
-        }
-    }
+        System.out.println("Sample seats inserted.");
+    };
+}
 }

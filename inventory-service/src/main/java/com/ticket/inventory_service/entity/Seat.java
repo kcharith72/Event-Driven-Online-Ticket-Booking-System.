@@ -3,6 +3,8 @@ package com.ticket.inventory_service.entity;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 
 @Entity
@@ -13,27 +15,49 @@ public class Seat {
 
     private String eventId;
 
-    private String status; // AVAILABLE or RESERVED
+    @Enumerated(EnumType.STRING)
+    private SeatStatus status;
 
     private LocalDateTime expiryTime;
 
-    public Seat() {}
+    public Seat() {
+    }
 
-    public Seat(String id, String eventId, String status) {
+    public Seat(String id, String eventId, SeatStatus status) {
         this.id = id;
         this.eventId = eventId;
         this.status = status;
     }
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getId() {
+        return id;
+    }
 
-    public String getEventId() { return eventId; }
-    public void setEventId(String eventId) { this.eventId = eventId; }
+    public String getEventId() {
+        return eventId;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public SeatStatus getStatus() {
+        return status;
+    }
 
-    public LocalDateTime getExpiryTime() { return expiryTime; }
-    public void setExpiryTime(LocalDateTime expiryTime) { this.expiryTime = expiryTime; }
+    public LocalDateTime getExpiryTime() {
+        return expiryTime;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
+    public void setStatus(SeatStatus status) {
+        this.status = status;
+    }
+
+    public void setExpiryTime(LocalDateTime expiryTime) {
+        this.expiryTime = expiryTime;
+    }
 }
